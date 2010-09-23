@@ -1,0 +1,5 @@
+multiuser google map, multiple users can control a google map at once
+
+built using the dnode nodejs module and the google map api, also has chat functionality, relies on websockets and socket.io
+
+useful application ideas more than welcome!

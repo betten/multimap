@@ -1,0 +1,66 @@
+html {
+	height:100%;
+}
+body {
+	font-family:arial;
+	height:100%;
+	margin:0px;
+	padding:0px;
+}
+#map {
+	height:100%;
+	width:100%;
+}
+#chat {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	background:rgba(0,0,0,0.5);
+	color:#fff;
+	position:absolute;
+	top:40px;
+	right:10px;
+	height:300px;
+	padding-left:4px;
+	width:200px;
+}
+#messages {
+	height:250px;
+	overflow:auto;
+	padding-top:4px;
+	width:100%;
+}
+#map .mouse {
+	color:#f00;
+	font-weight:bold;
+	position:absolute;
+	z-index:1;
+}
+#whoami {
+	font-size:11px;
+}
+#say {
+	border:1px solid #fff;
+	font-size:14px;
+	outline:none;
+	width:192px;
+}
+#info {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	background:rgba(0,0,0,0.5);
+	color:#fff;
+	position:absolute;
+	top:350px;
+	right:10px;
+	height:300px;
+	padding-left:4px;
+	width:200px;
+}
+#stati {
+	height:292px;
+	overflow:auto;
+	padding:4px 0px 4px 0px;
+	width:100%;
+}
