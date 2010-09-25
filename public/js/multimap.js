@@ -43,6 +43,9 @@ $(document).ready(function() {
 		$('#stati').prepend(status).scrollTop(0);
 	};
 	var mousemarkers = {};
+	var setName = function(name) {
+		$('#whoami').html('Your name is <strong>' + name + '</strong>');
+	};
 
 	DNode(function() {
 		this.name = null;
@@ -50,7 +53,7 @@ $(document).ready(function() {
 		this.init = function(id, name, clients, lat, lng, zoom, maptypeid) {
 			this.id = id;
 			this.name = name;
-			$('#whoami').html('Your name is <strong>' + name + '</strong>');
+			setName(this.name);
 			if(lat && lng) {
 				var latlng = new google.maps.LatLng(lat, lng);
 				map.setCenter(latlng);
@@ -134,6 +137,18 @@ $(document).ready(function() {
 			google.maps.event.removeListener(maptypeid_changed_listener);
 			map.setMapTypeId(typeid);
 			maptypeid_changed_listener = google.maps.event.addListener(map, 'maptypeid_changed', maptypeidChangedEvent);
+		};
+		this.renamed = function(id, oldname, newname) {
+			if(this.id == id) {
+				setName(newname);
+			}
+			addMessage(
+				$('<div class="message">').append(
+					$('<strong>').text(oldname),
+					$('<span>').text(' is now '),
+					$('<strong>').text(newname)
+				)
+			);	
 		};
 	}).connect(3030, function(rmt) {
 		remote = rmt;

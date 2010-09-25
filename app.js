@@ -53,6 +53,7 @@ DNode(function(client, conn) {
 		emitter.on('movedmap', client.movedmap);
 		emitter.on('zoomed', client.zoomed);
 		emitter.on('maptypeid', client.maptypeid);
+		emitter.on('renamed', client.renamed);
 		client.name = getName();
 		client.id = new Date().getTime().toString();
 		client.init(client.id, client.name, clients, map_lat, map_lng, map_zoom, map_maptypeid);
@@ -61,18 +62,29 @@ DNode(function(client, conn) {
 
 	});
 	conn.on('end', function() {
-		emitter.removeListener('joined', client.joined);
-		emitter.removeListener('said', client.said);
-		emitter.removeListener('disconnected', client.disconnected);
-		emitter.removeListener('clicked', client.clicked);
-		emitter.removeListener('moved', client.moved);
-		emitter.removeListener('movedmap', client.movedmap);
-		emitter.removeListener('zoomed', client.zoomed);
-		emitter.removeListener('maptypeid', client.maptypeid);
-		emitter.emit('disconnected', client.id, client.name);
+		try {
+			emitter.removeListener('joined', client.joined);
+			emitter.removeListener('said', client.said);
+			emitter.removeListener('disconnected', client.disconnected);
+			emitter.removeListener('clicked', client.clicked);
+			emitter.removeListener('moved', client.moved);
+			emitter.removeListener('movedmap', client.movedmap);
+			emitter.removeListener('zoomed', client.zoomed);
+			emitter.removeListener('maptypeid', client.maptypeid);
+			emitter.removeListener('renamed', client.renamed);
+			emitter.emit('disconnected', client.id, client.name);
+		} catch(err) {
+			console.log(err);
+		}
 		delete clients[client.id];
 	});
 	this.say = function(message) {
+		if(message.match(/^\/nick\s\w{1,16}$/)) {
+			var name = message.replace(/\/nick\s/,'');
+			emitter.emit('renamed', client.id, client.name, name); 
+			client.name = name;
+			return false;
+		}
 		emitter.emit('said', client.name, message);
 	};
 	this.click = function(x,y) {
